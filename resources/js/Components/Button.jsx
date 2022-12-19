@@ -7,6 +7,7 @@ export default function Button({
     className,
     processing,
     children,
+    onClick,
 }) {
     return (
         <button
@@ -15,6 +16,7 @@ export default function Button({
                 processing && "opacity-30"
             } btn-${variant} ${className ?? ""}`}
             disabled={processing}
+            onClick={onClick}
         >
             {children}
         </button>
@@ -33,4 +35,5 @@ Button.propTypes = {
         "light-outline",
         "white-outline",
     ]),
+    onClick: PropType.func,
 };
