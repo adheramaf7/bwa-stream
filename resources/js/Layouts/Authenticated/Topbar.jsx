@@ -31,7 +31,7 @@ export default function Topbar() {
                         onClick={toggleDropdown}
                     >
                         <img
-                            src="images/avatar.png"
+                            src="/images/avatar.png"
                             className="rounded-full object-cover w-full"
                             alt=""
                         />

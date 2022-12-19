@@ -5,12 +5,15 @@ export default function Sidebar() {
         <aside className="fixed z-50 w-[300px] h-full">
             <div className="flex flex-col p-[30px] pr-0 border-r border-gray-[#F1F1F1] overflow-y-auto h-full">
                 <Link href="/dashboard">
-                    <img src="images/moonton.svg" alt="" />
+                    <img src="/images/moonton.svg" alt="" />
                 </Link>
                 <div className="links flex flex-col mt-[60px] h-full gap-[50px]">
                     <div>
                         <div className="text-gray-1 text-sm mb-4">Menu</div>
-                        <a href="/" className="side-link active">
+                        <Link
+                            href={route("dashboard")}
+                            className="side-link active"
+                        >
                             <svg
                                 width="24"
                                 height="24"
@@ -28,7 +31,7 @@ export default function Sidebar() {
                                 </g>
                             </svg>
                             Discover
-                        </a>
+                        </Link>
                         <a href="#!" className="side-link">
                             <svg
                                 width="24"
@@ -153,7 +156,7 @@ export default function Sidebar() {
 
                     <div className="mt-auto pr-[30px]">
                         <div className="p-5 bg-black rounded-[25px]">
-                            <img src="icons/ic_star-rounded.svg" alt="" />
+                            <img src="/icons/ic_star-rounded.svg" alt="" />
                             <div className="text-white text-lg font-semibold mt-4 mb-8">
                                 For Greatest
                             </div>

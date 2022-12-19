@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard/Index');
     })->name('dashboard');
 
+    Route::get('movies/{slug}', function () {
+        return Inertia::render('Movie/Show');
+    })->name('movies.show');
+
     Route::get('subscription-plan', function () {
         return Inertia::render('SubscriptionPlan/Index');
     })->name('subscription_plan');
