@@ -20,7 +20,7 @@ export default function Dashboard(props) {
     return (
         <>
             <Head title="Dashboard" />
-            <Authenticated>
+            <Authenticated user={props.auth.user}>
                 {/* START: FEATURED */}
                 <div className="mb-6">
                     <div className="font-semibold text-[22px] text-black mb-4">

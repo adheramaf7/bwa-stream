@@ -68,6 +68,7 @@ export default function Login({ status, canResetPassword }) {
                                         name="email"
                                         placeholder="youremail@mail.com"
                                         type="text"
+                                        value={data.email}
                                         handleChange={onHandleChange}
                                     />
                                     <InputError
@@ -85,6 +86,7 @@ export default function Login({ status, canResetPassword }) {
                                         name="password"
                                         placeholder="*********"
                                         type="password"
+                                        value={data.password}
                                         handleChange={onHandleChange}
                                     />
                                     <InputError
@@ -102,7 +104,11 @@ export default function Login({ status, canResetPassword }) {
                                     Start Watching
                                 </span>
                             </a> */}
-                                <Button type="submit" variant="primary">
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    processing={processing}
+                                >
                                     <span className="text-base font-semibold">
                                         Start Watching
                                     </span>
