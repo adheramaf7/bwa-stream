@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,9 +34,7 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'role:User'])->group(function () {
     Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('movies/{slug}', function () {
-        return Inertia::render('Movie/Show');
-    })->name('movies.show');
+    Route::get('movies/{movie:slug}', [\App\Http\Controllers\MovieController::class, 'show'])->name('movies.show');
 
     Route::get('subscription-plan', function () {
         return Inertia::render('SubscriptionPlan/Index');
