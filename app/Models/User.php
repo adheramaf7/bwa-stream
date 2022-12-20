@@ -37,6 +37,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $with = [];
+
     /**
      * The attributes that should be cast.
      *
@@ -53,6 +55,6 @@ class User extends Authenticatable
 
     public function activeSubscription(): HasOne
     {
-        return $this->hasOne(UserSubscription::class)->where('expired_date', '>', now())->ofMany();
+        return $this->hasOne(UserSubscription::class)->where('payment_status', 'paid')->where('expired_date', '>', now())->ofMany();
     }
 }

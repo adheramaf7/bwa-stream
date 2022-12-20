@@ -20,7 +20,7 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
     return (
         <>
             <Head title="Dashboard" />
-            <Authenticated user={auth.user}>
+            <Authenticated>
                 {/* START: FEATURED */}
                 <div className="mb-6">
                     <div className="font-semibold text-[22px] text-black mb-4">
