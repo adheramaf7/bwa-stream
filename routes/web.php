@@ -29,9 +29,12 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', 'role:User'])->group(function () {
     Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('movies/{movie:slug}', [\App\Http\Controllers\MovieController::class, 'show'])->name('movies.show');
-    Route::get('subscription-plan', [\App\Http\Controllers\SubscriptionPlanController::class, 'index'])->name('subscription_plan.index');
-    Route::post('subscription-plan/{subscription_plan}/subscribe', [\App\Http\Controllers\SubscriptionPlanController::class, 'subscribe'])->name('subscription_plan.subscribe');
+    Route::get('movies/{movie:slug}', [\App\Http\Controllers\MovieController::class, 'show'])->name('movies.show')->middleware('check_user_subscription:1');
+
+    Route::group(['middleware' => 'check_user_subscription:0'], function () {
+        Route::get('subscription-plan', [\App\Http\Controllers\SubscriptionPlanController::class, 'index'])->name('subscription_plan.index');
+        Route::post('subscription-plan/{subscription_plan}/subscribe', [\App\Http\Controllers\SubscriptionPlanController::class, 'subscribe'])->name('subscription_plan.subscribe');
+    });
 });
 
 Route::middleware(['auth'])->group(function () {
