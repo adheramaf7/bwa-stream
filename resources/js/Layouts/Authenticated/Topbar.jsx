@@ -1,6 +1,7 @@
+import { Link } from "@inertiajs/inertia-react";
 import React from "react";
 
-export default function Topbar() {
+export default function Topbar({ user }) {
     const [showDropdown, setShowDropdown] = React.useState(true);
     const dropdownTarget = React.useRef();
 
@@ -23,7 +24,7 @@ export default function Topbar() {
             />
             <div className="flex items-center gap-4 cursor-pointer">
                 <span className="text-black text-sm font-medium">
-                    Welcome, Granola Sky
+                    Welcome, {user.name}
                 </span>
                 <div className="collapsible-dropdown flex flex-col gap-2 relative">
                     <div
@@ -40,24 +41,26 @@ export default function Topbar() {
                         className="bg-white rounded-2xl text-black font-medium flex flex-col gap-1 absolute z-[999] right-0 top-[80px] min-w-[180px] hidden overflow-hidden"
                         ref={dropdownTarget}
                     >
-                        <a
-                            href="#!"
+                        <Link
+                            href={route("dashboard")}
                             className="transition-all hover:bg-sky-100 p-4"
                         >
                             Dashboard
-                        </a>
-                        <a
-                            href="#!"
+                        </Link>
+                        <Link
+                            href={null}
                             className="transition-all hover:bg-sky-100 p-4"
                         >
                             Settings
-                        </a>
-                        <a
-                            href="sign_in.html"
-                            className="transition-all hover:bg-sky-100 p-4"
+                        </Link>
+                        <Link
+                            method="post"
+                            as="button"
+                            href={route("logout")}
+                            className="text-left transition-all hover:bg-sky-100 p-4"
                         >
                             Sign Out
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

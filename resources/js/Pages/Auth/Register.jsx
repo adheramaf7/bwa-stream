@@ -3,6 +3,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/inertia-react";
 import Button from "@/Components/Button";
+import InputError from "@/Components/InputError";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -57,7 +58,7 @@ export default function Register() {
                                 the better insight for your life
                             </p>
                         </div>
-                        <form className="w-[370px]">
+                        <form className="w-[370px]" onSubmit={submit}>
                             <div className="flex flex-col gap-6">
                                 <div>
                                     <InputLabel
@@ -68,6 +69,12 @@ export default function Register() {
                                         id="name"
                                         name="name"
                                         placeholder="Your Name"
+                                        value={data.name}
+                                        handleChange={onHandleChange}
+                                    />
+                                    <InputError
+                                        message={errors.name}
+                                        className="mt-2"
                                     />
                                 </div>
                                 <div>
@@ -80,6 +87,12 @@ export default function Register() {
                                         name="email"
                                         type="email"
                                         placeholder="youremail@mail.com"
+                                        value={data.email}
+                                        handleChange={onHandleChange}
+                                    />
+                                    <InputError
+                                        message={errors.email}
+                                        className="mt-2"
                                     />
                                 </div>
                                 <div>
@@ -92,6 +105,12 @@ export default function Register() {
                                         name="password"
                                         type="password"
                                         placeholder="********"
+                                        value={data.password}
+                                        handleChange={onHandleChange}
+                                    />
+                                    <InputError
+                                        message={errors.password}
+                                        className="mt-2"
                                     />
                                 </div>
                                 <div>
@@ -104,11 +123,21 @@ export default function Register() {
                                         name="password_confirmation"
                                         type="password"
                                         placeholder="********"
+                                        value={data.password_confirmation}
+                                        handleChange={onHandleChange}
+                                    />
+                                    <InputError
+                                        message={errors.password_confirmation}
+                                        className="mt-2"
                                     />
                                 </div>
                             </div>
                             <div className="grid space-y-[14px] mt-[30px]">
-                                <Button type="button" variant="primary">
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    processing={processing}
+                                >
                                     <span className="text-base font-semibold">
                                         Register
                                     </span>

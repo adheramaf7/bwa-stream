@@ -1,8 +1,13 @@
 import SubscriptionCard from "@/Components/SubscriptionCard";
 import Authenticated from "@/Layouts/Authenticated/Index";
+import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";
 
-export default function SubscriptionPlan() {
+export default function SubscriptionPlan({ auth, subscriptionPlans }) {
+    const subscribePlan = (id) => {
+        Inertia.post(route("subscription_plan.subscribe", id));
+    };
+
     return (
         <>
             <Head title="Subscription Plan" />
@@ -17,7 +22,23 @@ export default function SubscriptionPlan() {
                     </p>
 
                     <div className="flex justify-center gap-10 mt-[70px]">
-                        <SubscriptionCard
+                        {subscriptionPlans.map((subscriptionPlan) => (
+                            <SubscriptionCard
+                                key={"subplan-" + subscriptionPlan.id}
+                                id={subscriptionPlan.id}
+                                name={subscriptionPlan.name}
+                                price={subscriptionPlan.price}
+                                durationInMonth={
+                                    subscriptionPlan.active_period_in_month
+                                }
+                                features={subscriptionPlan.features}
+                                isPremium={subscriptionPlan.name === "Premium"}
+                                onSelectSubscription={() =>
+                                    subscribePlan(subscriptionPlan.id)
+                                }
+                            />
+                        ))}
+                        {/* <SubscriptionCard
                             id="1"
                             name="Basic"
                             price={299000}
@@ -44,7 +65,7 @@ export default function SubscriptionPlan() {
                             onSelectSubscription={() => {
                                 console.log("Pick Premium");
                             }}
-                        />
+                        /> */}
                     </div>
                 </div>
             </Authenticated>

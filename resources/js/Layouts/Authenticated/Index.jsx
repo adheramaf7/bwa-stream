@@ -1,20 +1,22 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
+import { usePage } from "@inertiajs/inertia-react";
 
 export default function Authenticated({ children }) {
+    const { auth } = usePage().props;
     return (
         <>
             <div className="mx-auto max-w-screen hidden lg:block">
                 {/* START: Sidebar */}
-                <Sidebar />
+                <Sidebar activePlan={auth.active_plan} />
                 {/* END: Sidebar */}
 
                 {/* START: Content */}
                 <div className="ml-[300px] px-[50px]">
                     <div className="py-10 flex flex-col gap-[50px]">
                         {/* START: TopBar */}
-                        <Topbar />
+                        <Topbar user={auth.user} />
                         {/* END: TopBar */}
 
                         <main>{children}</main>

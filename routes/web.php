@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,22 +25,20 @@ use Inertia\Inertia;
 
 Route::redirect('/', '/login');
 
-Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('Dashboard/Index');
-    })->name('dashboard');
+require __DIR__ . '/auth.php';
 
-    Route::get('movies/{slug}', function () {
-        return Inertia::render('Movie/Show');
-    })->name('movies.show');
+Route::middleware(['auth', 'role:User'])->group(function () {
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('movies/{movie:slug}', [\App\Http\Controllers\MovieController::class, 'show'])->name('movies.show')->middleware('check_user_subscription:1');
 
-    Route::get('subscription-plan', function () {
-        return Inertia::render('SubscriptionPlan/Index');
-    })->name('subscription_plan');
+    Route::group(['middleware' => 'check_user_subscription:0'], function () {
+        Route::get('subscription-plan', [\App\Http\Controllers\SubscriptionPlanController::class, 'index'])->name('subscription_plan.index');
+        Route::post('subscription-plan/{subscription_plan}/subscribe', [\App\Http\Controllers\SubscriptionPlanController::class, 'subscribe'])->name('subscription_plan.subscribe');
+    });
+});
 
+Route::middleware(['auth'])->group(function () {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-require __DIR__ . '/auth.php';
