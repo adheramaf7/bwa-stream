@@ -1,10 +1,19 @@
-export default function Checkbox({ name, value, handleChange }) {
+export default function Checkbox({
+    name,
+    value,
+    handleChange,
+    className,
+    checked,
+}) {
     return (
         <input
             type="checkbox"
             name={name}
             value={value}
-            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+            checked={checked}
+            className={`rounded border-gray-300 text-alerange shadow-sm focus:ring-alerange ${
+                className ?? ""
+            }`}
             onChange={(e) => handleChange(e)}
         />
     );

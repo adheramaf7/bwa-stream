@@ -20,7 +20,7 @@ export default function Topbar({ user }) {
                 type="text"
                 className="top-search"
                 placeholder="Search movie, cast, genre"
-                style={{ backgroundImage: "url('icons/ic_search.svg')" }}
+                style={{ backgroundImage: "url('/icons/ic_search.svg')" }}
             />
             <div className="flex items-center gap-4 cursor-pointer">
                 <span className="text-black text-sm font-medium">
