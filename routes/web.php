@@ -37,6 +37,12 @@ Route::middleware(['auth', 'role:User'])->group(function () {
     });
 });
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:Admin'], function () {
+    Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('movies', \App\Http\Controllers\Admin\MovieController::class);
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
