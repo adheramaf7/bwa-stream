@@ -3,14 +3,47 @@ import Authenticated from "@/Layouts/Authenticated/Index";
 import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";
 
-export default function SubscriptionPlan({ auth, subscriptionPlans }) {
+export default function SubscriptionPlan({
+    auth,
+    subscriptionPlans,
+    midtransClientKey,
+}) {
     const subscribePlan = (id) => {
-        Inertia.post(route("subscription_plan.subscribe", id));
+        Inertia.post(
+            route("subscription_plan.subscribe", id),
+            {},
+            {
+                only: ["userSubscription"],
+                onSuccess: ({ props }) => {
+                    const { userSubscription } = props;
+                    snapPay(userSubscription.snap_token);
+                },
+            }
+        );
+    };
+
+    const snapPay = (snapToken) => {
+        snap.pay(userSubscription.snap_token, {
+            onSuccess: function (result) {
+                console.log(result);
+            },
+            onPending: function (result) {
+                console.log(result);
+            },
+            onError: function (result) {
+                console.log(result);
+            },
+        });
     };
 
     return (
         <>
-            <Head title="Subscription Plan" />
+            <Head title="Subscription Plan">
+                <script
+                    src="https://app.sandbox.midtrans.com/snap/snap.js"
+                    data-client-key={midtransClientKey}
+                ></script>
+            </Head>
             <Authenticated>
                 <div className="py-20 flex flex-col items-center">
                     <div className="text-black font-semibold text-[26px] mb-3">
