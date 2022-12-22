@@ -2,15 +2,50 @@ import SubscriptionCard from "@/Components/SubscriptionCard";
 import Authenticated from "@/Layouts/Authenticated/Index";
 import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";
+import axios from "axios";
 
-export default function SubscriptionPlan({ auth, subscriptionPlans }) {
+export default function SubscriptionPlan({
+    subscriptionPlans,
+    midtransClientKey,
+}) {
     const subscribePlan = (id) => {
-        Inertia.post(route("subscription_plan.subscribe", id));
+        const url = route("subscription_plan.subscribe", id);
+
+        axios
+            .post(url, {})
+            .then(({ data }) => {
+                const { snap_token: snapToken } = data;
+                snapPay(snapToken);
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Something went wrong!");
+            });
+    };
+
+    const snapPay = (snapToken) => {
+        snap.pay(snapToken, {
+            onSuccess: function (result) {
+                console.log(result);
+                Inertia.visit(route("dashboard"));
+            },
+            onPending: function (result) {
+                console.log(result);
+            },
+            onError: function (result) {
+                console.log(result);
+            },
+        });
     };
 
     return (
         <>
-            <Head title="Subscription Plan" />
+            <Head title="Subscription Plan">
+                <script
+                    src="https://app.sandbox.midtrans.com/snap/snap.js"
+                    data-client-key={midtransClientKey}
+                ></script>
+            </Head>
             <Authenticated>
                 <div className="py-20 flex flex-col items-center">
                     <div className="text-black font-semibold text-[26px] mb-3">
