@@ -2,30 +2,32 @@ import SubscriptionCard from "@/Components/SubscriptionCard";
 import Authenticated from "@/Layouts/Authenticated/Index";
 import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";
+import axios from "axios";
 
 export default function SubscriptionPlan({
-    auth,
     subscriptionPlans,
     midtransClientKey,
 }) {
     const subscribePlan = (id) => {
-        Inertia.post(
-            route("subscription_plan.subscribe", id),
-            {},
-            {
-                only: ["userSubscription"],
-                onSuccess: ({ props }) => {
-                    const { userSubscription } = props;
-                    snapPay(userSubscription.snap_token);
-                },
-            }
-        );
+        const url = route("subscription_plan.subscribe", id);
+
+        axios
+            .post(url, {})
+            .then(({ data }) => {
+                const { snap_token: snapToken } = data;
+                snapPay(snapToken);
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Something went wrong!");
+            });
     };
 
     const snapPay = (snapToken) => {
-        snap.pay(userSubscription.snap_token, {
+        snap.pay(snapToken, {
             onSuccess: function (result) {
                 console.log(result);
+                Inertia.visit(route("dashboard"));
             },
             onPending: function (result) {
                 console.log(result);
