@@ -1,6 +1,7 @@
 import Button from "@/Components/Button";
 import Authenticated from "@/Layouts/Authenticated/Index";
 import { Link } from "@inertiajs/inertia-react";
+import Flickity from "react-flickity-component";
 
 export default function Dashboard() {
     return (

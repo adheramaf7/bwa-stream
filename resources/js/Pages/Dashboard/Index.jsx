@@ -1,22 +1,23 @@
 import "flickity/css/flickity.css";
 
+import React from "react";
 import Authenticated from "@/Layouts/Authenticated/Index";
 import { Head } from "@inertiajs/inertia-react";
 import Flickity from "react-flickity-component";
 import FeaturedMovie from "@/Components/FeaturedMovie";
 import MovieCard from "@/Components/MovieCard";
 
-export default function Dashboard({ auth, featuredMovies, movies }) {
-    const flickityConfig = {
-        cellAlign: "left",
-        contain: true,
-        groupCells: 1,
-        wrapAround: false,
-        pageDots: false,
-        prevNextButtons: false,
-        draggable: ">1",
-    };
+const flickityConfig = {
+    cellAlign: "left",
+    contain: true,
+    groupCells: 1,
+    wrapAround: false,
+    pageDots: false,
+    prevNextButtons: false,
+    draggable: ">1",
+};
 
+export default function Dashboard({ featuredMovies, movies }) {
     return (
         <>
             <Head title="Dashboard" />
